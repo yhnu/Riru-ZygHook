@@ -60,23 +60,30 @@ bool isAppNeedHook(JNIEnv *env, jstring jAppDataDir, jstring jPackageName) {
 
     const char *p1 = strstr(package_name, "com.lingdong.tv");
     if(p1 != NULL)
-    {
-        soname = "/data/emulated/0/sohook/"; soname += package_name; soname += ".so";
-        LOGI("Will Check %s", soname.c_str());
-        if(so_exists(soname))
-        {
-            LOGI("Will Load uid=%d soname=%s", uid, soname.c_str());
-            return true;
-        }
-        else
+    {        
+        // soname = "/data/emulated/0/sohook/"; soname += package_name; soname += ".so";
+        // LOGI("Will Check %s", soname.c_str());
+        // if(so_exists(soname))
+        // {
+        //     LOGI("Will Load uid=%d soname=%s", uid, soname.c_str());
+        //     return true;
+        // }
+        // else
         {
             //LOGI("Not Load %s", soname.c_str());
-            soname = "/data/local/tmp/"; soname += package_name; soname += ".so";
-            if(so_exists(soname))
-            {
-                LOGI("Will Load uid=%d soname=%s", uid, soname.c_str());
-                return true;
-            }
+            soname = "/data/local/tmp/sohook/"; soname += package_name; soname += ".so";            
+            // if(chmod(soname.c_str(), 0777) != 0)
+            // {
+            //     PLOGE("chmod %s failed!!!", soname.c_str());
+            // }
+
+            
+            // if(so_exists(soname))
+            // {
+            //     LOGI("Will Load uid=%d soname=%s", uid, soname.c_str());
+            //     return true;
+            // }
+            return true;
         }
     }
 
@@ -146,8 +153,10 @@ void injectBuild(JNIEnv *env) {
 
 static void appProcessPre(JNIEnv *env, jint _uid, jstring appDataDir, jstring packageName) {
     uid = _uid;
+    //在zyg进程判断是否需要HOOk
     enable_hook = isAppNeedHook(env, appDataDir, packageName);    
     //LOGI("%s", package_name);
+    
 }
 
 
@@ -189,6 +198,7 @@ EXPORT void nativeForkAndSpecializePre(
 
 EXPORT int nativeForkAndSpecializePost(JNIEnv *env, jclass clazz, jint res) {
     if (res != 0) return 0;
+    //在用户进程进行HOOk
     appProcessPost(env);
     return 0;
 }

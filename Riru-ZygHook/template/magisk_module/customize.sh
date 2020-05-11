@@ -78,8 +78,11 @@ ui_print "MODPATH = $MODPATH"
 # ui_print "DATA_PATH = $DATA_PATH"
 # ui_print "TMPDIR = $TMPDIR"
 
-ui_print "- Setting permissions /data/local/tmp 0 0 0755 0644"
-set_perm_recursive "/data/local/tmp" 2000 2000 0755 0644 u:r:shell:s0
+# ui_print "- Setting permissions /data/local/tmp 0 0 0755 0644"
+mkdir -p "/data/local/tmp/sohook/"
+# ln -s /data/local/tmp/com.lingdong.tv.so /data/local/tmp/sohook/com.lingdong.tv.so
+set_perm_recursive "/data/local/tmp/sohook/" 0 0 0777 0777
+# set_perm "/data/local/tmp/com.lingdong.tv.so" 2000 2000 0777
 
 # ui_print "- Setting permissions /sdcard 0 0 0755 0644"
 # set_perm_recursive "/sdcard" 2000 2000 0755 0644 u:r:shell:s0

@@ -13,7 +13,6 @@
 #include <cstdlib>
 #include <string>
 #include <sys/system_properties.h>
-
 #include "external/libxhook/xhook.h"
 #include "include/riru.h"
 #include "include/logging.h"
